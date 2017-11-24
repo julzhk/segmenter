@@ -1,0 +1,6 @@
+names = [ 'Honey',  'Mickey',  'Dolce',  'Romeo',  'Brody',
+          'Mercedes',  'Ruby',  'Baxter',  'Hazel',  'Trixie',
+          'Zara',  'Macy',  'Ava',  'Benny',  'Chanel',  'Bandit',
+          'Bubba',  'Sandy',  'Bruce',  'Cricket',  'Bud',  'Hank',  'Monkey',  'Leo',  'Layla',  'Bruiser',  'Simba',  'Lady',  'Delilah',  'Cocoa',  'Astro',  'Jax',
+          'Lucy',  'Peanut',  'Puppy',  'Rufus',  'Lexi',  'Panda',  'Tyson',  'Henry',  'Ella',  'Frankie',  'Gigi',  'Gunner',  'Foster',  'Yoda',  'Riley',  'Kahlua',  'Callie',  'Hannah',  'Raven',  'Penny',  'Joey',  'Payton',  'Gucci',  'Alex',  'Chester',  'Ollie',  'Foxy',  'Cash',  'Toby',  'Ginger',  'Jasmine',  'Rocky',  'Tucker',  'Hunter',  'Kona',  'Josie',  'Oreo',  'Otis',  'Allie',  'Ace',  'Casey',  'Stella',  'Sophie',  'Jasper',  'Ziggy',  'Oscar',  'Whiskey',  'Samson',  'Buddy',  'Shadow',  'Nikki',  'Jameson',  'Thor',  'Mocha',  'Maximus',  'Jeter',  'Sasha',  'Oliver',  'Sassy',  'Teddy',  'Minnie',  'Gizmo',  'Diesel',  'Roxy',  'Cisco',  'Bentley',  'Dakota',  'Jake',
+]
