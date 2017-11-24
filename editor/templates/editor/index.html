@@ -1,0 +1,72 @@
+{% extends 'editor/base.html' %}
+{% load static %}
+
+{% block body %}
+    <script src="{% static "editor/viz-lite.js" %}"></script>
+    <script>
+    document.body.innerHTML += Viz('digraph { ' +
+        '  node [shape=box, color=grey] ' +
+        '  rankdir=LR;' +
+    {# balance sheet sub graph #}
+        'subgraph cluster_0 {' +
+        'rank="same";' +
+        'label = "Balance Sheet Items";' +
+        '  rankdir=LR;' +
+    {% for balancesheetitem in balance_sheet_items_with_segments %}
+        ' "{{ balancesheetitem.name}}" ; ' +
+    {% endfor %}
+    {% for balancesheetitem in balance_sheet_items_without_segments %}
+        '"{{ balancesheetitem.name}}" ; ' +
+    {% endfor %}
+    '}' +
+    '	subgraph cluster_1 { ' +
+        'label = "Segments"; ' +
+        '  rankdir=LR;' +
+
+    {% for segment in parent_segments %}
+        '{{ segment.name }} ; ' +
+    {% endfor %}
+    {% for segment in child_segments %}
+        '"{{ segment.name}}" -> "{{ segment.parent_segment.name }}" ; ' +
+    {% endfor %}
+                '}' +
+        '	subgraph cluster_2 { ' +
+        '          rank="same";' +
+        'label = "Elections"; ' +
+        '  rankdir=LR;' +
+
+    {% for election in elections %}
+            ' "{{ election.name }}" ; '+
+    {% endfor %}
+    {% for segment in segments %}
+        {% if segment.election %}
+            '"{{ segment.election.name }}" -> "{{ segment.name }}"  ; '+
+        {% endif %}
+    {% endfor %}
+
+    '} ' +
+    {% for balancesheetitem in balance_sheet_items_with_segments %}
+        '"{{ balancesheetitem.name}}" -> "{{ balancesheetitem.parent_segment.name }}" ; ' +
+    {% endfor %}
+    {% for balancesheetitem in balance_sheet_items_without_segments %}
+        '"{{ balancesheetitem.name}}" ; ' +
+    {% endfor %}
+    {%  for logical_segment in logical_segments %}
+        {% for bs_item in logical_segment.computed_balance_sheet_items %}
+          '"{{  bs_item.name }}" -> "{{ logical_segment.name }}"; ' +
+        {% endfor %}
+    {% endfor %}
+
+
+    '}');
+    </script>
+
+    <ul>
+    {% for balancesheetitem in balance_sheets %}
+        <li>
+            {{ balancesheetitem.name }}:
+            {{ balancesheetitem.get_election }}
+        </li>
+{% endfor %}
+    </ul>
+{% endblock %}

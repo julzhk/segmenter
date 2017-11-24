@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% block extrahead %}
+    {% endblock %}
+</head>
+<body>
+<nav>
+    <ul>
+        <li>
+    <a href="{% url "home" %}">home</a>
+        </li>
+        <li>
+    <a href="{% url "segmenttree" %}">segments</a>
+        </li>
+        <li>
+    <a href="{% url "electiontree" %}">elections</a>
+        </li>
+        <li>
+    <a href="{% url "admin:index" %}">admin</a>
+        </li>
+    </ul>
+</nav>
+{% block body %}
+{% endblock %}
+</body>
+</html>
