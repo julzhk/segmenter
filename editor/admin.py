@@ -11,7 +11,7 @@ class SegmentForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(SegmentForm, self).__init__(*args, **kwargs)
-        self.fields['parent_segment'].queryset = Segment.objects.exclude(
+        self.fields['parent_segment'].queryset = Segment.is_published.exclude(
             id__exact=self.instance.id)
 
 class BalanceSheetInline(admin.StackedInline):

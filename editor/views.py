@@ -15,14 +15,14 @@ def electiontreemap(request):
     return HttpResponse(template.render(context, request))
 
 def get_tree(root):
-    children = Segment.objects.filter(parent_segment=root)
+    children = Segment.is_published.filter(parent_segment=root)
     r = {'name':root.name,
          children:[make_leaf(c) for c in children if c]
          }
     return r
 
 def make_leaf(segment):
-    children_list = [make_leaf(c) for c in Segment.objects.filter(parent_segment=segment) if c]
+    children_list = [make_leaf(c) for c in Segment.is_published.filter(parent_segment=segment) if c]
     r = {'name': segment.name,
           }
     if children_list:
@@ -35,13 +35,13 @@ def make_leaf(segment):
 def segmentsTreemapAPI(request):
     data = {
         "name": "flare",
-        "children": [make_leaf(s) for s in Segment.objects.filter(parent_segment=None)]}
+        "children": [make_leaf(s) for s in Segment.is_published.filter(parent_segment=None)]}
     return JsonResponse(data)
 
 
 def electiontreemapAPI(request):
     groupby_election = defaultdict(list)
-    for balancesheetitem in BalanceSheetItem.objects.all():
+    for balancesheetitem in BalanceSheetItem.is_published.all():
         groupby_election[balancesheetitem.get_election()].append(balancesheetitem)
     print (groupby_election)
     children = [{'name':e.name,
@@ -60,15 +60,15 @@ def electiontreemapAPI(request):
 def index(request):
 
     template = loader.get_template('editor/index.html')
-    logical_segments = Segment.objects.exclude(logic_segment ='')
+    logical_segments = Segment.is_published.exclude(logic_segment ='')
     context = {
-        'segments': Segment.objects.all(),
-        'parent_segments': Segment.objects.filter(parent_segment=None),
-        'child_segments': Segment.objects.exclude(parent_segment=None),
-        'balance_sheet_items_with_segments': BalanceSheetItem.objects.exclude(parent_segment=None),
-        'balance_sheet_items_without_segments': BalanceSheetItem.objects.filter(parent_segment=None),
+        'segments': Segment.is_published.all(),
+        'parent_segments': Segment.is_published.filter(parent_segment=None),
+        'child_segments': Segment.is_published.exclude(parent_segment=None),
+        'balance_sheet_items_with_segments': BalanceSheetItem.is_published.exclude(parent_segment=None),
+        'balance_sheet_items_without_segments': BalanceSheetItem.is_published.filter(parent_segment=None),
     'logical_segments': logical_segments,
-    'balance_sheets': BalanceSheetItem.objects.all(),
-    'elections': Election.objects.all()
+    'balance_sheets': BalanceSheetItem.is_published.all(),
+    'elections': Election.is_published.all()
     }
     return HttpResponse(template.render(context, request))
